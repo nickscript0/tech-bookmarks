@@ -1,13 +1,15 @@
 -- TODO: extract ports to a specific ports module
 
 
-module Main exposing (..)
+port module Main exposing (..)
 
 import Html.App
 import Html exposing (text, div)
 import Task exposing (succeed)
 import Http exposing (getString)
-import Ports
+
+
+--import Ports
 
 
 main : Program Never
@@ -46,13 +48,18 @@ type alias Bookmark =
     , link : String
     , title : String
     , summary : String
+    , tags : List String
     }
+
+
+type alias BookmarkJson =
+    { bookmarks : List Bookmark }
 
 
 type Msg
     = Start
     | YamlToJson String
-    | JsonInput (List Bookmark)
+    | YamlToJsonResponse (BookmarkJson)
     | Error String
 
 
@@ -63,9 +70,9 @@ update msg model =
             ( { model | text = "Started!" }, Cmd.none )
 
         YamlToJson yaml ->
-            ( model, Ports.yamlToJson yaml )
+            ( model, yamlToJson yaml )
 
-        JsonInput bookmarks_list ->
+        YamlToJsonResponse bookmarks_list ->
             ( model, Cmd.none )
 
         Error error_msg ->
@@ -81,3 +88,14 @@ requestInput =
 
 
 -- Subscriptions
+
+
+port yamlToJson : String -> Cmd msg
+
+
+port yamlToJsonResponse : (BookmarkJson -> msg) -> Sub msg
+
+
+subscriptions : Model -> Sub Msg
+subscriptions model =
+    yamlToJsonResponse YamlToJsonResponse

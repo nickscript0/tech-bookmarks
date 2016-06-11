@@ -12,7 +12,7 @@
   <script type="text/javascript">
     // var doc = jsyaml.safeLoad('greeting: hello\nname: world'); // console.log(doc);
     var app = Elm.Main.fullscreen();
-    app.ports.jsyaml.subscribe(function(yaml_text) {
+    app.ports.yamlToJson.subscribe(function(yaml_text) {
       var doc = jsyaml.safeLoad(yaml_text);
       console.log(doc);
     });
