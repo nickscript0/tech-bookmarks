@@ -1,0 +1,18 @@
+version: '2'
+services:
+  dev:
+    image: nginx:stable-alpine
+    command: sh -c "sed -i 's/sendfile/#sendfile/g' /etc/nginx/nginx.conf && nginx -g 'daemon off;'"
+    ports:
+      - 7000:80
+    volumes:
+      - .:/usr/share/nginx/html:ro
+
+  # dev2:
+  #   image: python:3.5
+  #   command: python3 -m http.server
+  #   working_dir: /workdir
+  #   volumes:
+  #     - .:/workdir:ro
+  #   ports:
+  #     - 7001:8000
