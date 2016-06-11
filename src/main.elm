@@ -39,7 +39,7 @@ type alias Model =
 
 type Msg
     = StartOne
-    | JsYaml String
+    | YamlToJson String
     | Error String
 
 
@@ -52,14 +52,14 @@ update msg model =
         Error error_msg ->
             ( { model | error = Just error_msg }, Cmd.none )
 
-        JsYaml yaml_str ->
-            ( model, Ports.jsyaml yaml_str )
+        YamlToJson yaml_str ->
+            ( model, Ports.yamlToJson yaml_str )
 
 
 requestInput : Cmd Msg
 requestInput =
     Task.perform (\x -> Error (toString x))
-        (\a -> JsYaml a)
+        (\a -> YamlToJson a)
         (getString "/inputs/data.yml")
 
 
