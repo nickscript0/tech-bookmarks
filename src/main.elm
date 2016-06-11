@@ -14,10 +14,6 @@ view model =
     text "Hi bookmarks! 7"
 
 
-
--- div [] []
-
-
 init : ( Model, Cmd Msg )
 init =
     ( model, Cmd.none )

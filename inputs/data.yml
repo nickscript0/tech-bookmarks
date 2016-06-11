@@ -1,0 +1,23 @@
+---
+
+bookmarks:
+  - date: 2016-06-05
+    link: https://news.ycombinator.com/item?id=11823274
+    title: Async and Await
+    summary: |
+      Good discussion in comments on Async/Await vs Promises vs Callbacks.
+
+      The general consensus is Async/Await allows for more concise code but there are gotchas to watch out for.
+    tags:
+      - javascript
+
+  - date: 2016-05-29
+    link: https://news.ycombinator.com/item?id=11181980
+    title: "Mobx: Simple, scalable state management"
+    summary: |
+      Mobx is a simpler alternative to Redux using observables notation.
+
+      Compared to Redux, Mobx is simpler and more automatic (bindings) at the expense of Redux's extreme predictability and testability.
+    tags:
+      - javascript
+      - react.js
