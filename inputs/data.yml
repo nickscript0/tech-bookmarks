@@ -1,7 +1,7 @@
 ---
 
 bookmarks:
-  - date: 2016-06-05
+  - date: "2016-06-05"
     link: https://news.ycombinator.com/item?id=11823274
     title: Async and Await
     summary: |
@@ -11,7 +11,7 @@ bookmarks:
     tags:
       - javascript
 
-  - date: 2016-05-29
+  - date: "2016-05-29"
     link: https://news.ycombinator.com/item?id=11181980
     title: "Mobx: Simple, scalable state management"
     summary: |

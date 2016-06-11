@@ -7,6 +7,7 @@ import Html.App
 import Html exposing (text, div)
 import Task exposing (succeed)
 import Http exposing (getString)
+import Debug exposing (log)
 
 
 --import Ports
@@ -19,19 +20,20 @@ main =
 
 view : Model -> Html.Html Msg
 view model =
-    text "Hi bookmarks! 7"
+    List.map (\x -> text x.title) model.bookmarks
+        |> div []
 
 
 init : ( Model, Cmd Msg )
 init =
     -- ( model, Cmd.none )
-    ( model, requestInput )
+    ( default_model, requestInput )
 
 
-model : Model
-model =
+default_model : Model
+default_model =
     { text = ""
-    , bookmarks = []
+    , bookmarks = [ Bookmark "c" "c" "c" "c" [] ]
     , error = Nothing
     }
 
@@ -67,16 +69,17 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Start ->
-            ( { model | text = "Started!" }, Cmd.none )
+            ( { default_model | text = "Started!" }, Cmd.none )
 
         YamlToJson yaml ->
             ( model, yamlToJson yaml )
 
         YamlToJsonResponse bookmark_json ->
-            ( { model | bookmarks = bookmark_json.bookmarks }, Cmd.none )
+            -- ( { default_model | bookmarks = bookmark_json.bookmarks }, Cmd.none )
+            ( { default_model | bookmarks = [ Bookmark (log "YamlToJsonResponse" "b") "b" "b" "b" [] ] }, Cmd.none )
 
         Error error_msg ->
-            ( { model | error = Just error_msg }, Cmd.none )
+            ( { default_model | error = Just error_msg }, Cmd.none )
 
 
 requestInput : Cmd Msg
