@@ -7573,15 +7573,12 @@ var _evancz$elm_http$Http$post = F3(
 			A2(_evancz$elm_http$Http$send, _evancz$elm_http$Http$defaultSettings, request));
 	});
 
-var _user$project$Main$model = {text: 'zero'};
-var _user$project$Main$view = function (model) {
-	return _elm_lang$html$Html$text('Hi bookmarks! 7');
-};
-var _user$project$Main$jsyaml = _elm_lang$core$Native_Platform.outgoingPort(
+var _user$project$Ports$jsyaml = _elm_lang$core$Native_Platform.outgoingPort(
 	'jsyaml',
 	function (v) {
 		return v;
 	});
+
 var _user$project$Main$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
@@ -7589,26 +7586,37 @@ var _user$project$Main$update = F2(
 			case 'StartOne':
 				return {
 					ctor: '_Tuple2',
-					_0: {text: 'one'},
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{text: 'one'}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'Error':
 				return {
 					ctor: '_Tuple2',
-					_0: {text: _p0._0},
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							error: _elm_lang$core$Maybe$Just(_p0._0)
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			default:
 				return {
 					ctor: '_Tuple2',
 					_0: model,
-					_1: _user$project$Main$jsyaml(_p0._0)
+					_1: _user$project$Ports$jsyaml(_p0._0)
 				};
 		}
 	});
-var _user$project$Main$Model = function (a) {
-	return {text: a};
+var _user$project$Main$model = {text: 'zero', error: _elm_lang$core$Maybe$Nothing};
+var _user$project$Main$view = function (model) {
+	return _elm_lang$html$Html$text('Hi bookmarks! 7');
 };
+var _user$project$Main$Model = F2(
+	function (a, b) {
+		return {text: a, error: b};
+	});
 var _user$project$Main$Error = function (a) {
 	return {ctor: 'Error', _0: a};
 };

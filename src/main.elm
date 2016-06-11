@@ -1,12 +1,13 @@
 -- TODO: extract ports to a specific ports module
 
 
-port module Main exposing (..)
+module Main exposing (..)
 
 import Html.App
 import Html exposing (text, div)
 import Task exposing (succeed)
 import Http exposing (getString)
+import Ports
 
 
 main : Program Never
@@ -27,11 +28,12 @@ init =
 
 model : Model
 model =
-    { text = "zero" }
+    { text = "zero", error = Nothing }
 
 
 type alias Model =
     { text : String
+    , error : Maybe String
     }
 
 
@@ -45,17 +47,13 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         StartOne ->
-            ( { text = "one" }, Cmd.none )
+            ( { model | text = "one" }, Cmd.none )
 
         Error error_msg ->
-            ( { text = error_msg }, Cmd.none )
+            ( { model | error = Just error_msg }, Cmd.none )
 
         JsYaml yaml_str ->
-            ( model, jsyaml yaml_str )
-
-
-
--- "greeting: hello\nname: world" )
+            ( model, Ports.jsyaml yaml_str )
 
 
 requestInput : Cmd Msg
@@ -67,6 +65,3 @@ requestInput =
 
 
 -- Subscriptions
-
-
-port jsyaml : String -> Cmd msg
