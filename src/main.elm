@@ -72,8 +72,8 @@ update msg model =
         YamlToJson yaml ->
             ( model, yamlToJson yaml )
 
-        YamlToJsonResponse bookmarks_list ->
-            ( model, Cmd.none )
+        YamlToJsonResponse bookmark_json ->
+            ( { model | bookmarks = bookmark_json.bookmarks }, Cmd.none )
 
         Error error_msg ->
             ( { model | error = Just error_msg }, Cmd.none )
