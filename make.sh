@@ -1,2 +1,2 @@
 # El Capitan uninstalled Make... use this in the meantime
-elm-make main.elm --output main.js
+elm-make src/main.elm --output dist/main.js
