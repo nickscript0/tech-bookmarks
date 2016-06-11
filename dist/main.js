@@ -7618,12 +7618,13 @@ var _user$project$Main$JsYaml = function (a) {
 var _user$project$Main$requestInput = A3(
 	_elm_lang$core$Task$perform,
 	function (x) {
-		return _user$project$Main$Error('Error retrieving json');
+		return _user$project$Main$Error(
+			_elm_lang$core$Basics$toString(x));
 	},
 	function (a) {
-		return _user$project$Main$JsYaml('greeting: hello\nname: world');
+		return _user$project$Main$JsYaml(a);
 	},
-	_elm_lang$core$Task$succeed(_elm_lang$core$Platform_Cmd$none));
+	_evancz$elm_http$Http$getString('/inputs/data.yml'));
 var _user$project$Main$init = {ctor: '_Tuple2', _0: _user$project$Main$model, _1: _user$project$Main$requestInput};
 var _user$project$Main$main = {
 	main: _elm_lang$html$Html_App$program(

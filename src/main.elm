@@ -60,9 +60,9 @@ update msg model =
 
 requestInput : Cmd Msg
 requestInput =
-    Task.perform (\x -> Error "Error retrieving json")
-        (\a -> JsYaml "greeting: hello\nname: world")
-        (succeed Cmd.none)
+    Task.perform (\x -> Error (toString x))
+        (\a -> JsYaml a)
+        (getString "/inputs/data.yml")
 
 
 
