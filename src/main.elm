@@ -1,7 +1,12 @@
-module Main exposing (..)
+-- TODO: extract ports to a specific ports module
+
+
+port module Main exposing (..)
 
 import Html.App
 import Html exposing (text, div)
+import Task exposing (succeed)
+import Http exposing (getString)
 
 
 main : Program Never
@@ -16,29 +21,52 @@ view model =
 
 init : ( Model, Cmd Msg )
 init =
-    ( model, Cmd.none )
+    -- ( model, Cmd.none )
+    ( model, requestInput )
 
 
 model : Model
 model =
-    { name = "zero" }
+    { text = "zero" }
 
 
 type alias Model =
-    { name : String
+    { text : String
     }
 
 
 type Msg
     = StartOne
-    | StartTwo
+    | JsYaml String
+    | Error String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         StartOne ->
-            ( { name = "one" }, Cmd.none )
+            ( { text = "one" }, Cmd.none )
 
-        StartTwo ->
-            ( { name = "two" }, Cmd.none )
+        Error error_msg ->
+            ( { text = error_msg }, Cmd.none )
+
+        JsYaml yaml_str ->
+            ( model, jsyaml yaml_str )
+
+
+
+-- "greeting: hello\nname: world" )
+
+
+requestInput : Cmd Msg
+requestInput =
+    Task.perform (\x -> Error "Error retrieving json")
+        (\a -> JsYaml "greeting: hello\nname: world")
+        (succeed Cmd.none)
+
+
+
+-- Subscriptions
+
+
+port jsyaml : String -> Cmd msg
