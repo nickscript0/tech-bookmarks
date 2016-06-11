@@ -28,32 +28,48 @@ init =
 
 model : Model
 model =
-    { text = "zero", error = Nothing }
+    { text = ""
+    , bookmarks = []
+    , error = Nothing
+    }
 
 
 type alias Model =
     { text : String
+    , bookmarks : List Bookmark
     , error : Maybe String
     }
 
 
+type alias Bookmark =
+    { date : String
+    , link : String
+    , title : String
+    , summary : String
+    }
+
+
 type Msg
-    = StartOne
+    = Start
     | YamlToJson String
+    | JsonInput (List Bookmark)
     | Error String
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        StartOne ->
-            ( { model | text = "one" }, Cmd.none )
+        Start ->
+            ( { model | text = "Started!" }, Cmd.none )
+
+        YamlToJson yaml ->
+            ( model, Ports.yamlToJson yaml )
+
+        JsonInput bookmarks_list ->
+            ( model, Cmd.none )
 
         Error error_msg ->
             ( { model | error = Just error_msg }, Cmd.none )
-
-        YamlToJson yaml_str ->
-            ( model, Ports.yamlToJson yaml_str )
 
 
 requestInput : Cmd Msg
