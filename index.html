@@ -13,19 +13,38 @@
     // var doc = jsyaml.safeLoad('greeting: hello\nname: world'); // console.log(doc);
     var app = Elm.Main.fullscreen();
     app.ports.yamlToJson.subscribe(function(yaml_text) {
-      doc = jsyaml.safeLoad(yaml_text);
+      var doc = jsyaml.safeLoad(yaml_text);
       console.log(doc);
 
       // Need to use setTimeout as a workaround for sending: https://github.com/elm-lang/core/issues/595
       setTimeout(function() {
-        app.ports.yamlToJsonResponse.send(doc);
-        console.log("Called send")
+        app.ports.yamlToJsonResponse.send({
+          "bookmarks": []
+        });
+        console.log("Called send 1")
       }, 1);
+      // DEBUGGING
+      setTimeout(function() {
+        app.ports.yamlToJsonResponse.send(doc);
+        console.log("Called send 1000")
+      }, 1000);
+      setTimeout(function() {
+        app.ports.yamlToJsonResponse.send(doc);
+        console.log("Called send 2000")
+      }, 2000);
 
       window.app = app;
 
       //app.ports.yamlToJsonResponse.send("abc");
     });
+  </script>
+
+  <script type="text/javascript">
+    // DEBUGGING
+    window.app.ports.yamlToJsonResponse.send({
+      "bookmarks": []
+    });
+    console.log("Called send [from next block]")
   </script>
 </body>
 
